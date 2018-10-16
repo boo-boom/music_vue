@@ -64,7 +64,7 @@ export default {
     box-sizing: border-box;
     padding-top: 5px;
     .wrap {
-        width: 1100px;
+        width: 980px;
         margin: 0 auto;
         display: flex;
         align-items: center;
@@ -181,7 +181,7 @@ export default {
                     }
                 }
                 .bar {
-                    width: 620px;
+                    width: 610px;
                     display: flex;
                     align-items: center;
                     .box {
@@ -227,8 +227,8 @@ export default {
                         height: 9px;
                         line-height: 9px;
                         font-size: 9px;
-                        flex: 0 0 120px;
-                        width: 120px;
+                        flex: 0 0 110px;
+                        width: 110px;
                         padding-left: 10px;
                         box-sizing: border-box;
                         color: #a1a1a1;
@@ -236,7 +236,6 @@ export default {
                 }
             }
             .settings {
-                margin-left: 50px;
                 display: flex;
                 align-items: center;
                 & > span {

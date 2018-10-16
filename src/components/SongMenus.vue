@@ -1,6 +1,6 @@
 <template>
     <div class="song-menus">
-        <div class="menu-item" v-for="item,index in 10">
+        <div class="menu-item" v-for="item,index in 8">
             <div class="pic">
                 <img src="../assets/img/test.jpg" alt="">
                 <div class="info">

@@ -31,10 +31,10 @@ export default {
     border-top: 1px solid #ddd;
     position: relative;
     top: -1px;
-    padding-bottom: 60px;
+    padding-bottom: 45px;
     background: #f5f5f5;
     .main {
-        width: 1100px;
+        width: 980px;
         margin: 0 auto;
         padding: 20px 0;
         display: flex;
