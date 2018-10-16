@@ -73,6 +73,7 @@
 import Swiper from "./../components/Swiper";
 import SongMenuTitle from "./../components/SongMenuTitle";
 import SongMenus from "./../components/SongMenus";
+import { mapMutations } from 'vuex';
 export default {
   name: "ViewHome",
   components: { Swiper, SongMenuTitle, SongMenus },
@@ -87,6 +88,12 @@ export default {
             }
           }
       }
+  },
+  mounted() {
+      this.modTest(123111)
+  },
+  methods: {
+      ...mapMutations(['modTest'])
   },
 };
 </script>
