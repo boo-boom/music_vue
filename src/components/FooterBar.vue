@@ -31,6 +31,7 @@ export default {
     border-top: 1px solid #ddd;
     position: relative;
     top: -1px;
+    padding-bottom: 60px;
     background: #f5f5f5;
     .main {
         width: 1100px;

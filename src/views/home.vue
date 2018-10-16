@@ -53,12 +53,12 @@
                         <p class="l">热门主播</p>
                     </div>
                     <div class="list">
-                        <div class="item" v-for="item in 10">
+                        <div class="item" v-for="item in 5">
                             <div class="img">
                                 <img src="./../assets/img/test.jpg" alt="">
                             </div>
                             <div class="info">
-                                <p class="name line-clamp1">张惠妹张惠妹张惠妹张惠妹张惠妹</p>
+                                <p class="name line-clamp1">张惠妹</p>
                                 <p class="desc line-clamp1">张惠妹张惠妹张惠妹张惠妹</p>
                             </div>
                         </div>
