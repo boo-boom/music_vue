@@ -14,11 +14,11 @@
     <div class="container">
       <div class="c-l">
         <div class="song-menu">
-          <song-menu-title/>
-          <song-menus/>
+          <song-menu-title />
+          <song-menus />
         </div>
         <div class="song-menu">
-          <song-menu-title/>
+          <song-menu-title />
           <div class="swiper-per">
             <swiper class="slidePer" :options="swiperPerOpt">
               <swiper-slide style="height:140px;" v-for="(item,index) in 10" :key="item">
@@ -35,7 +35,7 @@
           </div>
         </div>
         <div class="song-menu">
-          <song-menu-title/>
+          <song-menu-title />
           <div class="leaderboard">
             <div class="rank-list" v-for="item in 3">
               <div class="rank-title">云音乐飙升榜</div>
@@ -99,7 +99,7 @@ export default {
   name: "ViewHome",
   components: { swiper, swiperSlide, SongMenuTitle, SongMenus },
   data() {
-    const self = this
+    const self = this;
     return {
       swiperBannerOpt: {
         pagination: {
@@ -107,8 +107,8 @@ export default {
         },
         on: {
           slideChangeTransitionStart: function() {
-            self.bannerIndex = this.activeIndex
-          },
+            self.bannerIndex = this.activeIndex;
+          }
         }
       },
       swiperPerOpt: {
@@ -118,11 +118,11 @@ export default {
         navigation: {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev"
-        },
+        }
       },
       banners: [],
-      backgroundUrl: '',
-      bannerIndex: 0,
+      backgroundUrl: "",
+      bannerIndex: 0
     };
   },
   created() {
@@ -133,21 +133,21 @@ export default {
       this.$http.get("/api/banner").then(res => {
         if (res.data.code === 200) {
           this.banners = res.data.banners;
-          this.backgroundUrl = this.banners[0].backgroundUrl
+          this.backgroundUrl = this.banners[0].backgroundUrl;
         }
       });
-    },
+    }
   },
   computed: {
     swiper() {
-      return this.$refs.swiperBanner.swiper
+      return this.$refs.swiperBanner.swiper;
     }
   },
   watch: {
     bannerIndex(nVal, oVal) {
-      this.backgroundUrl = this.banners[nVal].backgroundUrl
+      this.backgroundUrl = this.banners[nVal].backgroundUrl;
     }
-  },
+  }
 };
 </script>
 
@@ -156,7 +156,7 @@ export default {
   background: #f5f5f5;
   .swiper-wrap {
     background-repeat: repeat-x;
-    transition: all .3s;
+    transition: all 0.3s;
     .center {
       height: 336px;
       width: 980px;
@@ -165,7 +165,7 @@ export default {
       .downloadApp {
         position: absolute;
         z-index: 9;
-        background: url('./../assets/img/download.png') no-repeat right 0;
+        background: url("./../assets/img/download.png") no-repeat right 0;
         top: 0;
         right: 0;
         width: 375px;
@@ -313,7 +313,10 @@ export default {
   /deep/ .swiper-pagination-bullet-active {
     background: #c20c0c;
   }
-  /deep/ .swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet {
+  /deep/
+    .swiper-container-horizontal
+    > .swiper-pagination-bullets
+    .swiper-pagination-bullet {
     margin: 0 10px;
   }
   /deep/ .swiper-pagination-bullet {
@@ -336,7 +339,8 @@ export default {
       .pic {
         width: 112px;
         height: 100px;
-        background: url("./../assets/img/album_cover_player.png") no-repeat center center / 100% 100%;
+        background: url("./../assets/img/album_cover_player.png") no-repeat
+          center center / 100% 100%;
         & > img {
           width: 100px;
           height: 100%;

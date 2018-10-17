@@ -1,20 +1,16 @@
 <template>
-    <div id="headerWrap">
-        <div id="headerBar">
-            <a class="logo"></a>
-            <ul class="h-nav">
-                <li
-                    v-for="(item,index) in tabBar"
-                    :key="item.name"
-                    :class="index==0?'act':''"
-                >{{item.name}}</li>
-            </ul>
-            <div class="h-search">
-                <span class="iconfont icon-chaxun"></span>
-                <input type="text" class="srch" placeholder="音乐/视频/电台/用户" maxlength="50">
-            </div>
-        </div>
+  <div id="headerWrap">
+    <div id="headerBar">
+      <a class="logo"></a>
+      <ul class="h-nav">
+        <li v-for="(item,index) in tabBar" :key="item.name" :class="index==0?'act':''">{{item.name}}</li>
+      </ul>
+      <div class="h-search">
+        <span class="iconfont icon-chaxun"></span>
+        <input type="text" class="srch" placeholder="音乐/视频/电台/用户" maxlength="50">
+      </div>
     </div>
+  </div>
 </template>
 
 <script>

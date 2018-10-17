@@ -1,24 +1,24 @@
 <template>
-    <div class="song-menu-title">
-        <div class="t-l">
-            <p class="title">{{title}}</p>
-            <div class="tags">
-                <span>华语</span>
-                <span class="line">|</span>
-                <span>华语</span>
-                <span class="line">|</span>
-                <span>华语</span>
-                <span class="line">|</span>
-                <span>华语</span>
-                <span class="line">|</span>
-                <span>华语</span>
-            </div>
-        </div>
-        <p class="t-r">
-            <span>更多</span>
-            <span class="iconfont icon-jiantou1"></span>
-        </p>
+  <div class="song-menu-title">
+    <div class="t-l">
+      <p class="title">{{title}}</p>
+      <div class="tags">
+        <span>华语</span>
+        <span class="line">|</span>
+        <span>华语</span>
+        <span class="line">|</span>
+        <span>华语</span>
+        <span class="line">|</span>
+        <span>华语</span>
+        <span class="line">|</span>
+        <span>华语</span>
+      </div>
     </div>
+    <p class="t-r">
+      <span>更多</span>
+      <span class="iconfont icon-jiantou1"></span>
+    </p>
+  </div>
 </template>
 
 <script>
@@ -29,7 +29,7 @@ export default {
       type: String,
       default: "热门推荐"
     }
-  },
+  }
 };
 </script>
 
