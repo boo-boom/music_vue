@@ -14,19 +14,19 @@
     <div class="container">
       <div class="c-l">
         <div class="song-menu">
-          <song-menu-title />
-          <song-menus />
+          <song-menu-title title="热门推荐" :tags="hotTags" @selectTagEmit="selectTag" />
+          <song-menus :playlist="hotRecommend" />
         </div>
         <div class="song-menu">
-          <song-menu-title />
+          <song-menu-title title="新碟上架" />
           <div class="swiper-per">
             <swiper class="slidePer" :options="swiperPerOpt">
-              <swiper-slide style="height:140px;" v-for="(item,index) in 10" :key="item">
+              <swiper-slide style="height:140px;" v-for="(item,index) in newCD" :key="item.id">
                 <div class="pic">
-                  <img src="./../assets/img/test.jpg" alt="">
+                  <img :src="item.picUrl" alt="">
                 </div>
-                <p class="name line-clamp1">Billboard Presents Electric Asia Vol. 2</p>
-                <p class="desc line-clamp1">Billboard Presents Electric Asia Vol. 2</p>
+                <p class="name line-clamp1">{{item.name}}</p>
+                <p class="desc line-clamp1">{{item.artist.name}}</p>
               </swiper-slide>
               <div class="swiper-pagination" slot="pagination"></div>
               <div class="swiper-button-prev" slot="button-prev"></div>
@@ -35,15 +35,15 @@
           </div>
         </div>
         <div class="song-menu">
-          <song-menu-title />
+          <song-menu-title title="榜单" />
           <div class="leaderboard">
-            <div class="rank-list" v-for="item in 3">
-              <div class="rank-title">云音乐飙升榜</div>
+            <div class="rank-list" v-for="item in leaderboard">
+              <div class="rank-title">{{item[0].idxName}}</div>
               <div class="iconfont icon-zanting"></div>
               <ul>
-                <li v-for="(song,index) in 10">
-                  <p>
-                    <span class="idx" :class="{'red':index<3}">{{index + 1}}</span>一百万个可能
+                <li v-for="(song,index) in item">
+                  <p class="line-clamp1">
+                    <span class="idx" :class="{'red':index<3}">{{index + 1}}</span>{{song.name}}
                   </p>
                 </li>
               </ul>
@@ -58,29 +58,29 @@
             <p class="r iconfont icon-jiantou1"></p>
           </div>
           <div class="list">
-            <div class="item" v-for="item in 10">
+            <div class="item" v-for="item in artists" :key="item.id">
               <div class="img">
-                <img src="./../assets/img/test.jpg" alt="">
+                <img :src="item.picUrl" alt="">
               </div>
               <div class="info">
-                <p class="name line-clamp1">张惠妹张惠妹张惠妹张惠妹张惠妹</p>
-                <p class="desc line-clamp1">张惠妹张惠妹张惠妹张惠妹</p>
+                <p class="name line-clamp1">{{item.name}}</p>
+                <p class="desc line-clamp1">{{item.briefDesc}}</p>
               </div>
             </div>
           </div>
         </div>
         <div class="singers min-text">
           <div class="singer-title">
-            <p class="l">热门主播</p>
+            <p class="l">推荐电台</p>
           </div>
           <div class="list">
-            <div class="item" v-for="item in 5">
+            <div class="item" v-for="item in djprogram">
               <div class="img">
-                <img src="./../assets/img/test.jpg" alt="">
+                <img :src="item.picUrl" alt="">
               </div>
               <div class="info">
-                <p class="name line-clamp1">张惠妹</p>
-                <p class="desc line-clamp1">张惠妹张惠妹张惠妹张惠妹</p>
+                <p class="name line-clamp1">{{item.name}}</p>
+                <p class="desc line-clamp1">{{item.copywriter}}</p>
               </div>
             </div>
           </div>
@@ -122,11 +122,25 @@ export default {
       },
       banners: [],
       backgroundUrl: "",
-      bannerIndex: 0
+      bannerIndex: 0,
+      hotTags: [],
+      hotRecommend: [],
+      newCD: [],
+      leaderboard: [],
+      artists: [],
+      djprogram: [],
     };
   },
   created() {
     this.getBanner();
+    this.getHotTags();
+    this.getPlaylist();
+    this.getNewCD();
+    this.getLeaderboard(3);
+    this.getLeaderboard(0);
+    this.getLeaderboard(2);
+    this.getArtists(5001);
+    this.getDjprogram();
   },
   methods: {
     getBanner() {
@@ -136,7 +150,82 @@ export default {
           this.backgroundUrl = this.banners[0].backgroundUrl;
         }
       });
-    }
+    },
+    getHotTags() {
+      this.$http.get("/api/playlist/hot").then(res => {
+        if (res.data.code === 200) {
+          this.hotTags = res.data.tags
+        }
+      });
+    },
+    getPlaylist() {
+      this.$http.get("/api/personalized", {
+        params: {
+          limit: 8,
+          cat: 'hot',
+        }
+      }).then(res => {
+        if (res.data.code === 200) {
+          this.hotRecommend = res.data.result
+        }
+      });
+    },
+    getNewCD() {
+      this.$http.get("/api/top/album", {
+        params: {
+          offset: 0,
+          limit: 10,
+        }
+      }).then(res => {
+        if (res.data.code === 200) {
+          this.newCD = res.data.albums
+        }
+      });
+    },
+    getLeaderboard(idx) {
+      this.$http.get("/api/top/list", {
+        params: { idx }
+      }).then(res => {
+        if (res.data.code === 200) {
+          const tracks = res.data.playlist.tracks.slice(0, 10)
+          tracks[0].idxName = res.data.playlist.name
+          this.leaderboard.push(tracks)
+        }
+      });
+    },
+    getArtists(cat) {
+      this.$http.get("/api/artist/list", {
+        params: { cat, limit: 10 }
+      }).then(res => {
+        if (res.data.code === 200) {
+          this.artists = res.data.artists
+          return res.data.artists
+        }
+      }).then(artists => {
+        artists.forEach(item => {
+          this.getArtistDesc(item);
+        })
+      });
+    },
+    getArtistDesc(item) {
+      this.$http.get("/api/artist/desc", {
+        params: { id: item.id }
+      }).then(res => {
+        if (res.data.code === 200) {
+          item.briefDesc = res.data.briefDesc
+        }
+      })
+    },
+    getDjprogram() {
+      this.$http.get("/api/personalized/djprogram").then(res => {
+        if (res.data.code === 200) {
+          this.djprogram = res.data.result
+        }
+      })
+    },
+    selectTag(tagId) {
+      console.log(tagId)
+    },
   },
   computed: {
     swiper() {
@@ -196,7 +285,8 @@ export default {
         justify-content: space-between;
         margin: 20px 0;
         .rank-list {
-          padding: 30px 45px;
+          width: 212px;
+          padding: 30px 20px;
           box-sizing: border-box;
           border: 1px solid #f2f2f2;
           .rank-title {
@@ -237,7 +327,7 @@ export default {
       .singers {
         box-sizing: border-box;
         padding: 10px 20px 20px;
-        width: 100%;
+        width: calc(100% - 25px);
         .singer-title {
           display: flex;
           justify-content: space-between;
@@ -254,12 +344,17 @@ export default {
           .item {
             display: flex;
             margin-bottom: 16px;
+            overflow: hidden;
             .img {
               width: 60px;
               height: 60px;
               flex: 0 0 60px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              overflow: hidden;
               & > img {
-                width: 100%;
+                width: auto;
                 height: 100%;
               }
             }
@@ -271,6 +366,7 @@ export default {
               padding: 10px;
               line-height: 18px;
               background: #f5f5f5;
+              box-sizing: border-box;
               .name {
                 font-size: 15px;
                 margin-bottom: 4px;

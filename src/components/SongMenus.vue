@@ -1,16 +1,16 @@
 <template>
   <div class="song-menus">
-    <div class="menu-item" v-for="item,index in 8">
+    <div class="menu-item" v-for="item,index in playlist" :key="item.id">
       <div class="pic">
-        <img src="../assets/img/test.jpg" alt="">
+        <img :src="item.picUrl" alt="">
         <div class="info">
           <span class="iconfont icon-headset"></span>
-          <span class="num">28万</span>
+          <span class="num">{{item.playCount}}</span>
           <span class="iconfont icon-zanting"></span>
         </div>
       </div>
       <div class="desc line-clamp3">
-        <span>电台节目</span>李安：我从不教孩子孝顺，我只教他如何去爱
+        {{item.name}}
       </div>
     </div>
   </div>
@@ -18,7 +18,13 @@
 
 <script>
 export default {
-  name: "SongMenus"
+  name: "SongMenus",
+  props: {
+    playlist: {
+      type: Array,
+      required: true,
+    }
+  }
 };
 </script>
 

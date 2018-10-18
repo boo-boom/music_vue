@@ -3,15 +3,11 @@
     <div class="t-l">
       <p class="title">{{title}}</p>
       <div class="tags">
-        <span>华语</span>
-        <span class="line">|</span>
-        <span>华语</span>
-        <span class="line">|</span>
-        <span>华语</span>
-        <span class="line">|</span>
-        <span>华语</span>
-        <span class="line">|</span>
-        <span>华语</span>
+        <span
+          v-for="(tag,index) in tags"
+          v-if="index<5"
+          @click="selectTag(tag.id)"
+          >{{tag.name}}<i class="line" v-if="index<4">|</i></span>
       </div>
     </div>
     <p class="t-r">
@@ -28,8 +24,17 @@ export default {
     title: {
       type: String,
       default: "热门推荐"
+    },
+    tags: {
+      type: Array,
+      default: () => []
+    },
+  },
+  methods: {
+    selectTag(tagId) {
+      this.$emit('selectTagEmit', tagId)
     }
-  }
+  },
 };
 </script>
 
